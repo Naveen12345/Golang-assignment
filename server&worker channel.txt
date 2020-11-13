@@ -1,0 +1,48 @@
+
+ package main
+
+import (
+	"fmt"
+	"time"
+)
+func bike(id int, jobs <-chan int, results chan<- int) {
+	for j := range jobs {
+		fmt.Println("Bike",id, "started with", j,"km/hr")
+		time.Sleep(time.Second)
+		fmt.Println("Bike", id, "slows with a speed of", j,"km/hr")
+		results <- j * 2
+	}
+}
+
+func main() {
+
+	const numJobs = 5
+	jobs := make(chan int, numJobs)
+	results := make(chan int, numJobs)
+
+	for w := 1; w <= 3; w++ {
+	go bike(w, jobs, results)
+	}
+
+	for j := 1; j <= numJobs; j++ {
+		jobs <- j
+	}
+	close(jobs)
+
+	for a := 1; a <= numJobs; a++ {
+		<-results
+	}
+}
+
+OUTPUT:-
+
+Bike 3 started with 1 km/hr
+Bike 1 started with 2 km/hr
+Bike 2 started with 3 km/hr
+Bike 1 slows with a speed of 2 km/hr
+Bike 1 started with 4 km/hr
+Bike 2 slows with a speed of 3 km/hr
+Bike 2 started with 5 km/hr
+Bike 3 slows with a speed of 1 km/hr
+Bike 2 slows with a speed of 5 km/hr
+Bike 1 slows with a speed of 4 km/hr

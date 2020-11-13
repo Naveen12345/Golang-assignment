@@ -1,0 +1,60 @@
+
+package main
+
+import (
+	"fmt"
+	"time"
+)
+
+func main() {
+	a := make(chan int, 7)
+	b := 11
+	for i:=0;i<10;i++{
+	go Employee(a, i)
+	}
+	go generateInts(a, b)
+
+	time.Sleep(1 * time.Second)
+}
+
+func Employee(a chan int, id int) {
+	for i := range a {
+		fmt.Printf("Employee %d received value %d\n", id, i)
+		time.Sleep(1 * time.Second)
+		fmt.Println("Executing Goroutines")
+	}
+}
+
+func generateInts(c chan int, a int) {
+	for i := 0; i < a; i++ {
+		c <- i
+		fmt.Printf("Sent value %d\n", i)
+		time.Sleep(1 * time.Millisecond)
+	}
+	close(c)
+}
+
+OUTPUT:-
+
+Sent value 0
+Employee 4 received value 0
+Sent value 1
+Employee 2 received value 1
+Sent value 2
+Employee 3 received value 2
+Sent value 3
+Employee 7 received value 3
+Sent value 4
+Employee 5 received value 4
+Sent value 5
+Employee 6 received value 5
+Sent value 6
+Employee 0 received value 6
+Sent value 7
+Employee 8 received value 7
+Sent value 8
+Employee 9 received value 8
+Sent value 9
+Employee 1 received value 9
+Sent value 10
+Executing Goroutines

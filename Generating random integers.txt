@@ -1,0 +1,38 @@
+
+
+package main 
+import ( 
+    "fmt"
+    "math/rand"
+  
+) 
+  
+func main() { 
+    fmt.Printf("generating 5 random integers upto 100:\n")
+    for i:=0;i<5;i++{
+    fmt.Println(rand.Intn(100)) } 
+    fmt.Println() 
+  
+    fmt.Printf("generating 5 random float values upto 100:\n")
+    for i:=0;i<5;i++{
+
+    fmt.Println(rand.Float64())} 
+  
+
+}
+
+OUTPUT:-
+
+generating 5 random integers upto 100:
+81
+87
+47
+59
+81
+
+generating 5 random float values upto 100:
+0.6868230728671094
+0.06563701921747622
+0.15651925473279124
+0.09696951891448456
+0.30091186058528707

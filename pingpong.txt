@@ -1,0 +1,41 @@
+
+package main
+ 
+import (
+	"fmt"
+	"time"
+)
+ 
+func main() {
+	ping := make(chan struct{}, 1)
+	pong := make(chan struct{}, 1)
+ 
+	ping<- struct{}{}
+ 
+	go start(ping, pong)
+ 
+	time.Sleep(time.Minute)
+}
+ 
+func start(ping, pong chan struct{}) {
+fmt.Printf("Ping.... Pong....started\n")
+fmt.Printf("\n")
+	for {
+		select {
+		case <-ping:
+			fmt.Println("ping")
+			pong<- struct{}{}
+		case <-pong:
+			fmt.Println("    *pong")
+			ping<- struct{}{}
+		}	}}
+
+
+OUTPUT:-
+
+Ping.... Pong....started
+
+ping
+    *pong
+ping
+    *pong

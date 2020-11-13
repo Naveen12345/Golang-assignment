@@ -1,0 +1,58 @@
+
+package main  
+import ( 
+    "fmt"
+    "io/ioutil"
+    "log"
+    "os"
+) 
+func CreateFile() { 
+    fmt.Printf("Writing a file:\n")  
+    file, err := os.Create("File1.txt") 
+      
+    if err != nil { 
+        log.Fatalf("failed creating file: %s", err) 
+    } 
+    defer file.Close() 
+    len, err := file.WriteString("Hai this is naveen"+ 
+            " From kloudone") 
+    if err != nil { 
+        log.Fatalf("failed writing to file: %s", err) 
+    }  
+    fmt.Printf("\nFile Name: %s", file.Name()) 
+    fmt.Printf("\nLength: %d bytes", len) 
+} 
+  
+func ReadFile() { 
+  
+    fmt.Printf("\n\nReading the file\n") 
+    fileName := "File1.txt"
+      
+    data, err := ioutil.ReadFile("File1.txt") 
+    if err != nil { 
+        log.Panicf("failed reading data from file: %s", err) 
+    } 
+    fmt.Printf("\nFile Name: %s", fileName) 
+    fmt.Printf("\nSize: %d bytes", len(data)) 
+    fmt.Printf("\nData: %s", data) 
+  
+} 
+
+func main() { 
+  
+    CreateFile() 
+    ReadFile() 
+} 
+
+OUTPUT:-
+
+Writing a file:
+
+File Name: File1.txt
+Length: 33 bytes
+
+Reading the file
+
+File Name: File1.txt
+Size: 33 bytes
+Data: Hai this is naveen. From kloudone
